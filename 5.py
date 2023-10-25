@@ -1,32 +1,29 @@
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+def merge(nums1, m, nums2, n):
+    i, j, k = m-1, n-1, m+n-1
 
-def delete_node(node):
-    if node is None or node.next is None:
-        return
+    while i >= 0 and j >= 0:
+        if nums1[i] > nums2[j]:
+            nums1[k] = nums1[i]
+            i -= 1
+        else:
+            nums1[k] = nums2[j]
+            j -= 1
+        k -= 1
 
-    # Копіюємо значення наступного вузла в поточний вузол
-    node.val = node.next.val
-
-    # Видаляємо наступний вузол
-    node.next = node.next.next
+    # Якщо nums2 ще має елементи, додамо їх до nums1
+    while j >= 0:
+        nums1[k] = nums2[j]
+        j -= 1
+        k -= 1
 
 # Приклад використання:
-# Створимо вхідний список: 4 -> 5 -> 1 -> 9
-head = ListNode(4, ListNode(5, ListNode(1, ListNode(9))))
+nums1 = [1, 2, 3, 0, 0, 0]
+m = 3
+nums2 = [2, 5, 6]
+n = 3
 
-# Задамо вузол, який потрібно видалити (наприклад, вузол зі значенням 5)
-node_to_delete = head.next
-
-# Викликаємо функцію для видалення вузла
-delete_node(node_to_delete)
-
-# Виведемо результат
-while head is not None:
-    print(head.val, end=" ")
-    head = head.next
+merge(nums1, m, nums2, n)
+print(nums1)
 
 
 

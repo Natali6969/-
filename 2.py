@@ -1,28 +1,20 @@
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+def count_numbers_with_even_digits(nums):
+    def count_digits(num):
+        count = 0
+        while num != 0:
+            num //= 10
+            count += 1
+        return count
 
-def delete_duplicates(head):
-    current = head
+    result = 0
+    for num in nums:
+        if count_digits(num) % 2 == 0:
+            result += 1
 
-    while current is not None and current.next is not None:
-        if current.val == current.next.val:
-            # Видаляємо дублікат, змінюючи вказівник
-            current.next = current.next.next
-        else:
-            # Переходимо до наступного вузла
-            current = current.next
-
-    return head
+    return result
 
 # Приклад використання:
-# Створимо вхідний відсортований список: 1 -> 1 -> 2
-head = ListNode(1, ListNode(1, ListNode(2)))
-result = delete_duplicates(head)
-
-# Виведемо результат
-while result is not None:
-    print(result.val, end=" ")
-    result = result.next
+nums = [555, 901, 482, 1771]
+result = count_numbers_with_even_digits(nums)
+print(result)
 
