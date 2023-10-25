@@ -1,26 +1,49 @@
-def my_pow():
-    x = 2.00000
-    n = 10
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
-    if n == 0:
-        return 1.0
-    elif n < 0:
-        x = 1 / x
-        n = -n
+def reorder_list(head):
+    if head is None or head.next is None:
+        return head
 
-    return recursive_pow(x, n)
+    # Знайдемо середину списку
+    slow, fast = head, head
+    while fast.next is not None and fast.next.next is not None:
+        slow = slow.next
+        fast = fast.next.next
 
-def recursive_pow(x, n):
-    if n == 0:
-        return 1.0
+    # Розбиваємо список на дві частини
+    second_half = slow.next
+    slow.next = None
 
-    half_pow = recursive_pow(x, n // 2)
+    # Реверсуємо другу половину
+    prev, current = None, second_half
+    while current is not None:
+        temp = current.next
+        current.next = prev
+        prev = current
+        current = temp
 
-    if n % 2 == 0:
-        return half_pow * half_pow
-    else:
-        return x * half_pow * half_pow
+    # Об'єднуємо дві частини списку
+    first, second = head, prev
+    while second is not None:
+        temp1, temp2 = first.next, second.next
+        first.next, second.next = second, temp1
+        first, second = temp1, temp2
 
-# Виклик функції і виведення результату
-result = my_pow()
-print(result)
+    return head
+
+# Приклад використання:
+# Створимо вхідний список: 1 -> 2 -> 3 -> 4 -> 5
+head = ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5)))))
+
+# Викликаємо функцію для перевпорядкування
+reorder_list(head)
+
+# Виведемо результат
+while head is not None:
+    print(head.val, end=" ")
+    head = head.next
+
+

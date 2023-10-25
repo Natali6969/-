@@ -3,32 +3,26 @@ class ListNode:
         self.val = val
         self.next = next
 
-def swap_pairs(head):
-    if head is None or head.next is None:
-        return head
-    
-    # Запам'ятовуємо наступний вузол
-    next_node = head.next
-    
-    # Міняємо місцями поточний вузол і наступний
-    head.next = swap_pairs(next_node.next)
-    next_node.next = head
-    
-    return next_node
+def delete_duplicates(head):
+    current = head
 
-# Створюємо початковий зв'язаний список: 1 -> 2 -> 3 -> 4
-head = ListNode(1, ListNode(2, ListNode(3, ListNode(4))))
+    while current is not None and current.next is not None:
+        if current.val == current.next.val:
+            # Видаляємо дублікат, змінюючи вказівник
+            current.next = current.next.next
+        else:
+            # Переходимо до наступного вузла
+            current = current.next
 
-# Викликаємо функцію swap_pairs
-new_head = swap_pairs(head)
+    return head
 
-# Виводимо результат
-while new_head is not None:
-    print(new_head.val, end=" -> ")
-    new_head = new_head.next
+# Приклад використання:
+# Створимо вхідний відсортований список: 1 -> 1 -> 2
+head = ListNode(1, ListNode(1, ListNode(2)))
+result = delete_duplicates(head)
 
-# Результат: 2 -> 1 -> 4 -> 3
-
-
-
+# Виведемо результат
+while result is not None:
+    print(result.val, end=" ")
+    result = result.next
 
